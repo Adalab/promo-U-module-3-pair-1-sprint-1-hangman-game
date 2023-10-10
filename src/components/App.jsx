@@ -11,11 +11,30 @@ function App() {
 
   //funciones, variables, handles
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setLastLetter] = useState("");
 
   const handleClick = (event) => {
     event.preventDefault();
     setNumberOfErrors(numberOfErrors + 1);
     console.log(numberOfErrors);
+  };
+
+
+
+  const handleChange = (event) => {
+
+    const inputLetter = event.target.value;
+
+    const isValidLetter = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+$/.test(inputLetter);
+
+    //test.() es un método que se utiliza para realizar la validación del event.target.value. Se está utilizando un regex (o expresion regular) que contiene solo caracteres del alfabeto español (minusculas, mayusculas, acentos)
+
+    if (isValidLetter || inputLetter === "") {
+      setLastLetter(inputLetter);
+    } else {
+      // La letra no es válida, hacer algo en consecuencia (puede mostrar un mensaje o ignorar)
+      console.log('La letra ingresada no es válida.');
+    }
   };
 
   return (
@@ -62,6 +81,8 @@ function App() {
               type="text"
               name="last-letter"
               id="last-letter"
+              value={lastLetter}
+              onChange={handleChange}
             />
           </form>
         </section>
