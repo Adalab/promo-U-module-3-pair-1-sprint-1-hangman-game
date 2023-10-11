@@ -12,6 +12,8 @@ function App() {
   //funciones, variables, handles
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState("");
+  const [word, setWord] = useState("pepino");
+  const [userLetters, setUserLetters] = useState ([]);
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -31,11 +33,35 @@ function App() {
 
     if (isValidLetter || inputLetter === "") {
       setLastLetter(inputLetter);
+      setUserLetters([...userLetters, inputLetter]);
     } else {
       // La letra no es válida, hacer algo en consecuencia (puede mostrar un mensaje o ignorar)
       console.log('La letra ingresada no es válida.');
     }
   };
+
+
+    const renderSolutionLetters = () => {
+      const wordLetters = word.split('');
+      return (
+        wordLetters.map((letter, index) => (
+          <li key={index} className="letter">
+            {userLetters.includes(letter) ? letter : ""}
+          </li>
+        ))
+      );
+    };
+
+    const renderErrorLetters = () => {
+      const errorLetters = userLetters.filter((letter) => !word.includes(letter) )
+      return (
+        errorLetters.map((letter, index) => (
+          <li key={index} className="letter">
+            {letter}
+          </li>
+        ))
+      );
+    }
 
   return (
   //html
@@ -50,26 +76,13 @@ function App() {
           <div className="solution">
             <h2 className="title">Solución:</h2>
             <ul className="letters">
-              <li className="letter">k</li>
-              <li className="letter">a</li>
-              <li className="letter"></li>
-              <li className="letter">a</li>
-              <li className="letter">k</li>
-              <li className="letter">r</li>
-              <li className="letter"></li>
-              <li className="letter">k</li>
-              <li className="letter">e</li>
-              <li className="letter">r</li>
+              {renderSolutionLetters()}
             </ul>
           </div>
           <div className="error">
             <h2 className="title">Letras falladas:</h2>
             <ul className="letters">
-              <li className="letter">f</li>
-              <li className="letter">q</li>
-              <li className="letter">h</li>
-              <li className="letter">p</li>
-              <li className="letter">x</li>
+            {renderErrorLetters()}
             </ul>
           </div>
           <form className="form">
