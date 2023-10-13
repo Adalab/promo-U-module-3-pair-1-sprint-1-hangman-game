@@ -2,7 +2,7 @@
 
 
 import '../styles/App.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import nombreVariable from '../images/nombre-imagen';
 
 
@@ -12,8 +12,22 @@ function App() {
   //funciones, variables, handles
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState("");
-  const [word, setWord] = useState("pepino");
+  const [word, setWord] = useState("");
   const [userLetters, setUserLetters] = useState ([]);
+
+  useEffect (()=> {
+    fetch('https://dev.adalab.es/api/random/word')
+    .then(response => response.json())
+    .then ((data)=> {
+
+      setWord (data.word);
+
+
+    });   
+
+  }, []);    
+
+
 
   const handleClick = (event) => {
     event.preventDefault();
