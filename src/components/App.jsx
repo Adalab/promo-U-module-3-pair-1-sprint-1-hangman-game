@@ -63,6 +63,14 @@ function App() {
       );
     }
 
+    const calculateErrors = () => {
+
+      const countErrors = userLetters.filter((letter) => !word.includes(letter))
+
+      return countErrors.length;
+
+    };
+
   return (
   //html
     /* <> </> etiqueta vacia = fragments */
@@ -99,7 +107,7 @@ function App() {
             />
           </form>
         </section>
-          <section className={"dummy error-" + numberOfErrors}> 
+          <section className={"dummy error-" + calculateErrors()}> 
           {/* {`dummy error- ${numberOfErrors}`} */}
           <span className="error-13 eye"></span>
           <span className="error-12 eye"></span>
